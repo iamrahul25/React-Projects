@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Lato&family=Poppins:wght@200;400&display=swap");
+
+:root{
+    --theme : #1888ff;
+    --accent : #f6dddb11;
+}
+
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.formDiv {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* border: 2px solid black; */
+  background-color: var(--accent);
+  position: relative;
+  font-size: 18px;
+  
+}
+
+.closeBtn{
+  background-color: rgb(187, 52, 52);
+  color: white;
+  border: 0;
+  border-radius: 5px;
+
+  margin: 4px;
+  padding: 5px 10px;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  cursor: pointer;
+}
+
+.addPin{
+  font-size: 14px;
+  font-weight: 800;
+  padding: 6px 10px;
+  /* width: 40%; */
+  margin-top: 3px;
+  cursor: pointer;
+  border: 0;
+  color: white;
+  border-radius: 5px;
+  background-color: rgb(73, 172, 73);
+  position: relative;
+  left: -140px;
+}
+
+.heading {
+  width: 100%;
+  background-color: var(--theme);
+  text-align: center;
+  padding: 5px 0;
+  color: white;
+}
+
+.form {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.form input,
+select,
+label,
+textarea {
+  width: 70%;
+  margin: 10px 0;
+  padding: 6px;
+  font-size: 15px;
+  /* margin-left: 20px; */
+}
+
+.locationDiv{
+  display: flex;
+  /* justify-content: space-around; */
+  gap: 20px;
+  width: 70%;
+}
+
+.locationDiv input{
+  width: 50%;
+}
+
+
+.form label {
+  margin: 0;
+  padding: 0;
+  /* margin-left: 20px; */
+  font-weight: 500;
+}
+
+.form input,textarea{
+  border: 1px solid rgb(173, 173, 173);
+
+}
+
+.btnDiv {
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#reset{
+    background-color: #E94B3CFF;
+}
+#submit{
+    background-color: var(--theme);
+}
+
+.btn {
+  font-size: 16px;
+  font-weight: 800;
+  padding: 6px 10px;
+  width: 40%;
+  margin-top: 10px;
+  cursor: pointer;
+  border: 0;
+  color: white;
+  border-radius: 5px;
+  background-color: var(--theme);
+}
