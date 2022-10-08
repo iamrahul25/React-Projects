@@ -1,0 +1,26 @@
+.joined_div{
+    /* background-color: rebeccapurple; */
+    text-align: center;
+    padding: 15px 0px;
+}
+
+.joined_div span{
+    background-color: rgb(255, 255, 181);
+    padding: 5px 10px;
+
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.left_div{
+    text-align: center;
+    padding: 15px 0px;
+}
+
+.left_div span{
+    background-color: rgb(255, 212, 181);
+    padding: 5px 10px;
+
+    border-radius: 8px;
+    font-size: 14px;
+}
