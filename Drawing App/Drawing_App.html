@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing App</title>
+</head>
+<style>
+    *{  
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        /* border: 1px solid red; */
+    }
+
+    body{
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+    }
+
+    canvas{
+        border: 1px solid black;
+        transform-origin: 0% 0%;
+        transform: scale(0.8);
+    }
+
+    .navbar{
+        padding: 5px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 15px;
+        background-color: rgb(60,60,60);
+    }
+
+    .color_div{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .color{
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        
+        margin: 5px;
+
+        border: 2px solid black;
+    }
+
+
+    .border{
+        border: 3px solid white;
+        transform: scale(1.1);
+    }
+
+    .width_div{
+        display: flex;
+        align-items: center;
+
+        color: white;
+        gap: 10px;
+    }
+
+    .width_div #width_value{
+        width: 30px;
+    }
+
+    #width_slider{
+        width: 200px;
+    }
+
+    .choose_color_div{
+        color: white;
+    }
+
+
+</style>
+<body>
+    <div class="navbar" id="navbar">
+
+        <div class="color_div">
+            <div class="color border" onclick="changeColor(this)" style="background-color: black;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: grey;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: white;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: brown;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: red;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: orange;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: yellow;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: greenyellow;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: green;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: blue;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: skyblue;"></div>
+            <div class="color" onclick="changeColor(this)" style="background-color: purple;"></div>
+            <div class="color" onclick="changeColor(this)" style="background: linear-gradient(90deg, red,yellow,green,blue,skyblue);"></div>
+        </div>
+
+        <div class="choose_color_div">
+            <label for="color_picker">Choose Color: </label>
+            <input type="color" name="color_picker" id="color_picker">
+        </div>
+
+        <div class="width_div">
+            <label for="width_slider">Line Width: </label>
+            <input type="range" name="width_slider" id="width_slider" min="2" max="101" value="10">
+            <p id="width_value">10</p>
+        </div>
+
+        <div>
+            <button onclick="downloadImage()">Download Image</button>
+            <button onclick="undoChange()">Undo</button>
+            <button onclick="clearCanvas()">Clear All</button>
+        </div>
+
+    </div>
+
+
+    <div class="canvas_div">
+        <canvas id="canvas"> </canvas>
+    </div>
+
+    
+</body>
+
+<script>
+
+    
+    const width_value = document.getElementById('width_value');
+    const width_slider = document.getElementById('width_slider');
+    const color_picker = document.getElementById('color_picker');
+    
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    // console.log("w: h: ",w," ",h);
+
+    const navHeight = document.getElementById('navbar').offsetHeight;
+
+    const a = w + (w * (25/100));
+    const b = h + (h * (25/100)) - navHeight;
+    // console.log("a: b: ",a," ",b);
+    canvas.width = a;
+    canvas.height = b;
+
+    let zoom = 0.8;
+    
+    // document.body.style.zoom = "80%";
+    // context.lineJoin = "round";
+    // context.lineCap = "round";
+    
+    context.fillStyle = "white";
+    context.fillRect(0,0, canvas.width, canvas.height);
+    
+    
+    let isDrawing = false;
+    let gradient = false;
+    let hue = 0;
+    
+    let width = 10;
+    context.lineWidth = width;
+    
+    let color = 'black';
+    context.strokeStyle = color;
+    context.fillStyle = color;
+    // context.globalAlpha = 0.4;
+    
+    // context.scale(4,4);
+
+    //Changing Width of Line
+    width_slider.addEventListener('input',()=>{
+        width = width_slider.value;
+        context.lineWidth = width;
+        width_value.innerHTML = width - 1;
+    });
+
+    //Changing Color of Line
+    color_picker.addEventListener('input',()=>{
+        context.strokeStyle = color_picker.value;
+        context.fillStyle = color_picker.value;
+    })
+
+
+    //Change Color
+    function changeColor(element){
+        color = element.style.backgroundColor;
+        // console.log("Color",color);
+
+        if(color==='initial'){
+            gradient = true;
+        }
+
+        else{
+            gradient = false;
+            context.strokeStyle = color;
+            context.fillStyle = color;
+        }
+
+        //Resetting Border of all div
+        const colors = document.getElementsByClassName('color');
+        const length = colors.length;
+        
+        for(let i=0; i<length; i++){
+            colors[i].classList.remove('border');
+        }
+
+        //Setting Border to Current Color
+        element.classList.add('border');
+    }
+
+
+    function draw(e){
+
+
+        if(isDrawing){
+
+            if(gradient){
+                hue = hue + 1;
+                if(hue >= 360){
+                    hue = 0;
+                }
+
+                context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+                context.fillStyle = `hsl(${hue}, 100%, 50%)`;
+            }
+
+
+            context.lineTo((e.clientX - canvas.offsetLeft)/zoom, (e.clientY - canvas.offsetTop)/zoom);
+            context.stroke();
+
+            context.beginPath();
+            context.arc((e.clientX - canvas.offsetLeft)/zoom, (e.clientY - canvas.offsetTop)/zoom, (width/2), 0, Math.PI * 2);
+            context.fill();
+
+            context.beginPath();
+            context.moveTo((e.clientX - canvas.offsetLeft)/zoom, (e.clientY - canvas.offsetTop)/zoom);
+        }
+    }
+
+
+    function start(e){
+        isDrawing = true;
+
+        //For Drawing Point
+        draw(e);
+    }
+
+    function end(e){
+        isDrawing = false;
+        //For Not Joining the Starting and Ending Path
+        context.beginPath();
+    }
+
+    function clearCanvas(){
+        context.clearRect(0,0, canvas.width, canvas.height);
+    }
+
+    function downloadImage(e){
+
+        let canvasUrl = canvas.toDataURL("image/png");
+        // console.log(canvasUrl);
+
+        const createImage = document.createElement('a');
+        createImage.href = canvasUrl;
+        createImage.download = "image_";
+        createImage.click();
+        createImage.remove();
+    }
+    
+
+    canvas.addEventListener('mousedown',start);
+    canvas.addEventListener('mousemove',draw);
+    canvas.addEventListener('mouseup',end);
+    canvas.addEventListener('mouseout',end);
+
+
+</script>
+</html>
