@@ -1,0 +1,58 @@
+.online_users{
+    height: 500px;
+    width: 100%;
+    max-width: 280px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Header */
+.online_users .header{
+    background-color: #1F639C;
+    color: white;
+    font-size: 18px;
+    padding: 20px 20px;
+}
+
+
+/* Body */
+.users_container{
+    height: 440px;
+    overflow-y: auto;
+}
+
+
+/* User Card */
+.user_card{
+    margin: 12px 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.user_card .user_name{
+    line-height: 50px;
+}
+
+.user_card .user_image{
+    position: relative;
+}
+
+.user_card .user_image img{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+.user_card .green_circle{
+    position: absolute;
+    bottom: 3px;
+    right: 0px;
+    height: 15px;
+    width: 15px;
+    background-color: rgb(66, 214, 66);
+    border: 2px solid white;
+    border-radius: 50%;
+}
